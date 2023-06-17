@@ -1,0 +1,144 @@
+version: '3'
+
+networks:
+  laravel:
+    external:
+      name: 3d7Network
+
+services:
+  app:
+    container_name: backend
+    build:
+      context: ./dockerfiles
+      dockerfile: nginx.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html:delegated
+    depends_on:
+      - php
+      - redis
+      - mysql
+      - mailhog
+    networks:
+      laravel:
+        ipv4_address: 192.168.80.13
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./src/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3000"
+    depends_on:
+      - app
+    networks:
+      laravel:
+        ipv4_address: 192.168.80.2
+
+  mysql:
+    container_name: database
+    image: mariadb:10.6
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_HOST: ${MYSQL_HOST:-SERVER_IP_ADDRESS}
+      MYSQL_PORT: ${MYSQL_PORT:-3306}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-DATABASE_NAME}
+      MYSQL_USER: ${MYSQL_USER:-DATABASE_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-DATABASE_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      laravel:
+        ipv4_address: 192.168.80.10
+
+  php:
+    container_name: 3D7TechWorkspace
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./src:/var/www/html:delegated
+    networks:
+      laravel:
+        ipv4_address: 192.168.80.3
+
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      laravel:
+        ipv4_address: 192.168.80.4
+
+  composer:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - php
+    # entrypoint: [ 'composer']
+    entrypoint: [ 'composer', '--ignore-platform-reqs' ]
+    networks:
+      laravel:
+        ipv4_address: 192.168.80.5
+
+  npm:
+    image: node:current-alpine
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+      - "5173:5173"
+    working_dir: /var/www/html
+    entrypoint: [ 'npm' ]
+    networks:
+      laravel:
+        ipv4_address: 192.168.80.6
+
+  artisan:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    volumes:
+      - ./src:/var/www/html:delegated
+    depends_on:
+      - mysql
+    entrypoint: [ 'php', '/var/www/html/artisan' ]
+    networks:
+      laravel:
+        ipv4_address: 192.168.80.7
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      laravel:
+        ipv4_address: 192.168.80.8
