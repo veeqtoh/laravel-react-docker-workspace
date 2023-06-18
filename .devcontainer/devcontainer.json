@@ -1,0 +1,14 @@
+{
+    "name": "3D7 Tech Workspace",
+    "dockerComposeFile": "./docker-compose.yml",
+    "service": "dev",
+    "workspaceFolder": "./src",
+    "postCreateCommand": "yarn",
+    "settings": {
+        "terminal.integrated.shell.*": "/bin/bash"
+    },
+    "extensions": {
+        
+    },
+    "remoteUser": "vscode",
+  }
