@@ -98,7 +98,6 @@ services:
       - ./src:/var/www/html
     depends_on:
       - php
-    # entrypoint: [ 'composer']
     entrypoint: [ 'composer', '--ignore-platform-reqs' ]
     networks:
       laravel:
