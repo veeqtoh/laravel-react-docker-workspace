@@ -33,13 +33,13 @@ Four additional containers are included that handle Composer, NPM, and Artisan c
 If you choose to connect to a remote database from the container, follow the steps below:
 
 - Run cp .env.example .env in your terminal or copy the [.env.example](.env.example) file and paste/save as .env
-- Update the connection parameters with your server IP address, created database and user parameters.
+- Update the connection parameters in the .env file to match your server IP address, created database and user parameters.
 
 **Note**:
 
 - All IP addresses are blocked and added to a list to access the server by default. So, before connecting to MySQL from another computer, the connecting computer must be enabled as an Access Host.
 - You may add the IP address of the mysql service **192.168.80.10** to your access host if you still can't establish a connection.
-- [This tutorial] https://www.hostgator.com/help/article/how-to-remotely-connect-to-the-mysql-database should help ifyou feel stuck.
+- [This tutorial](https://www.hostgator.com/help/article/how-to-remotely-connect-to-the-mysql-database) should help if you feel stuck.
 
 ## Permissions Issues
 
