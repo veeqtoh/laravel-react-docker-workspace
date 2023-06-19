@@ -38,7 +38,7 @@ If you choose to connect to a remote database from the container, follow the ste
 **Note**:
 
 - All IP addresses are blocked and added to a list to access the server by default. So, before connecting to MySQL from another computer, the connecting computer must be enabled as an Access Host.
-- You may add the IP address of the mysql service **192.168.80.10** to your access host if you still can't establish a connection.
+- You may add the IP address of the mysql service `192.168.80.10` to your access host if you still can't establish a connection.
 - [This tutorial](https://www.hostgator.com/help/article/how-to-remotely-connect-to-the-mysql-database) should help if you feel stuck.
 
 ## Permissions Issues
