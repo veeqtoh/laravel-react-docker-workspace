@@ -96,6 +96,10 @@ After that, you should be able to use `@vite` directives to enable hot-module re
 
 Want to build for production? Simply run `docker-compose run --rm npm run build`.
 
+## React Frontend
+
+The current version of React (18 as of today) uses node under the hood to help you generate a boilerplate version of a React application. Using the provided Docker Hub image, getting an instance set up and ready is simple and straight-forward. The node service is included in the `docker-compose.yml` file, and spins up alongside the webserver and database services. Your code will live in the [src/frontend](src/frontend) file directory as explained in [Usage](#usage). To see the app and test your changes, visit [localhost:3002](http://localhost:3002) after running `docker-compose up -d app`.
+
 ## MailHog
 
 The current version of Laravel (9 as of today) uses MailHog as the default application for testing email sending and general SMTP work during local development. Using the provided Docker Hub image, getting an instance set up and ready is simple and straight-forward. The service is included in the `docker-compose.yml` file, and spins up alongside the webserver and database services.
