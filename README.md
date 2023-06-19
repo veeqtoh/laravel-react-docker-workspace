@@ -1,4 +1,4 @@
-# Laravel React Docker Compose: Simplified Development Workflow
+# Laravel, React, Remote MySQL & Docker: Simplified Development Workflow
 
 Supercharge your local Laravel development with this streamlined Docker Compose workflow. Containerize your Laravel and React projects for efficient development, testing, and deployment. This project was inspired by the work [here](https://dev.to/aschmelyun/the-beauty-of-docker-for-local-laravel-development-13c0). Experience smoother workflows and unleash the power of Docker today!
 
